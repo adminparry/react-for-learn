@@ -1,0 +1,10 @@
+$blue: #056ef0;
+$column: 200px;
+
+.div{
+  display: inline-block;
+  background: $blue;
+  span{
+  	background: green;
+  }
+}
