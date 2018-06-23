@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+</head>
+<body>
+	<div id="message"></div>
+</body>
+<script type="text/babel">
+ 	var Counter = React.createClass({
+	  getInitialState: function () {
+	    return { clickCount: 0 ,facker:'laker'};
+	  },
+	  handleClick: function () {
+	  
+	    this.replaceState({ clickCount: 6 ,facker:'凉面'});
+	  },
+	  render: function () {
+	    return (<h2 onClick={this.handleClick}>点我！{this.state.facker}点击次数为: {this.state.clickCount}</h2>);
+	  }
+	});
+	ReactDOM.render(
+	  <Counter />,
+	  document.getElementById('message')
+	);
+</script>
+</html>

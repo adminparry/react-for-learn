@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+	<ul id="ul">
+		<li>
+			<span>666</span>
+		</li>
+		<li>
+			<span>555</span>
+		</li>
+		<li>
+			<span>444</span>
+		</li>
+		<li>
+			<span>333</span>
+		</li>
+	</ul>
+
+
+
+</body>
+<script>
+
+	function Element2obj(arg){
+		this.realElement = arg;
+		this.tagName = this.realElement.tagName;
+		this.childNodes = this.realElement.childNodes;
+		this.attributes = this.realElement.attributes;
+
+	}
+	Element2obj.prototype.diff = function(newElement){
+		if(newElement === this.realElement){
+			console.log('没有任何变化')
+		}
+		return this;
+	}
+	var root = document.createElement('ul');
+	function current(ele){
+		
+		for (var i = 0; i < 3 + ele.nodeType; i++) {
+			
+			var item = document.createElement('li');
+			item.innerHTML = item.nodeType + i;
+			ele.appendChild(item);
+		};
+		return ele;
+
+	}
+	setTimeout(function(){
+		obj.diff(root);
+		current(root);
+	},2000)
+	
+
+	var obj = new Element2obj(root);
+
+	document.body.appendChild(current(root));
+
+	console.log(obj);
+
+	
+	
+</script>
+</html>

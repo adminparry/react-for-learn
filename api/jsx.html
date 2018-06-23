@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+</head>
+<body>
+	<div id="example"></div>
+</body>
+<script type="text/babel">
+  var arr = [
+  	<h1>h1</h1>,
+  	<h2>h2</h2>
+  ]
+  ReactDOM.render(
+  	<div>
+  		 <h5 data-myattribute = "somevalue">自定义属性使用data-开头 &lt;h5 data-myattribute="666"&gt;</h5>
+  		  <h5>表达式{'{'}1+1{'}'}:{1+1}</h5>
+  		   <h5 style={{color:'red'}}>样式接受一个对象 style={'{'}color:'red'{'}'}</h5>
+  		   <h5>
+  		   <p>自动展开数组{JSON.stringify(arr)}</p>
+  		   {arr}
+  		   </h5>
+  	</div>
+   ,
+    document.getElementById('example')
+  );
+</script>
+</html>
