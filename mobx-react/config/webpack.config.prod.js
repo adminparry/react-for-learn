@@ -248,18 +248,21 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {
-       
-        // any required modules inside node_modules are extracted to vendor
-        return (
-          module.resource &&
-          /\.css$/.test(module.resource) &&
+        const isFuck = module.resource &&
           module.resource.indexOf(
             path.join(__dirname, '../src/mui')
           ) === 0 
           || /\.js$/.test(module.resource) &&
           module.resource.indexOf(
             path.join(__dirname, '../node_modules')
-          ) === 0
+          ) === 0;
+
+          if(isFuck){
+            console.log(module.resource)
+          }
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          isFuck
         )
       }
     }),

@@ -215,6 +215,7 @@ module.exports = {
     ],
   },
   plugins: [
+    
     // copy custom static assets
     new CopyWebpackPlugin([
       {
