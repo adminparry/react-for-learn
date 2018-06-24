@@ -1,9 +1,13 @@
 $blue: #056ef0;
 $column: 200px;
 
-.div{
-  display: inline-block;
+.align{
+  width: 80%;
+  margin: auto;
   background: $blue;
+  position: relative;
+  overflow: scroll;
+  height: 400px;
   span{
   	background: green;
   }

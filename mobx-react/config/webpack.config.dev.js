@@ -88,6 +88,7 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -121,6 +122,7 @@ module.exports = {
           },
         ],
         include: paths.appSrc,
+        exclude: paths.muiSrc,
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -212,6 +214,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+        '$': 'jquery',
+        '_':'lodash',
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -260,4 +266,5 @@ module.exports = {
   performance: {
     hints: false,
   },
+
 };
