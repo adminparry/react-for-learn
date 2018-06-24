@@ -127,6 +127,7 @@ module.exports = {
           },
         ],
         include: paths.appSrc,
+        exclude: paths.muiSrc,
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -167,6 +168,7 @@ module.exports = {
           // in the main CSS file.
           {
             test: /\.css$/,
+            exclude: paths.muiSrc,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -213,6 +215,12 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
+          {
+            test:/\.css$/,
+            loader: ExtractTextPlugin.extract({
+              use:require.resolve('css-loader')
+            }),
+          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
@@ -235,6 +243,31 @@ module.exports = {
     ],
   },
   plugins: [
+    
+    
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+       
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.css$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../src/mui')
+          ) === 0 
+          || /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
+    
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -288,6 +321,7 @@ module.exports = {
     new ExtractTextPlugin({
       filename: cssFilename,
     }),
+    
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.

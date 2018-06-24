@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import './css/timerStarter.css'
-import './mui/css/mui.css'
+
+import './mui/css/mui.min.css'
 import mui from './mui/js/mui'
 // import mui from 'mui'
 
