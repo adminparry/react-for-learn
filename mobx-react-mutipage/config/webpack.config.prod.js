@@ -12,6 +12,55 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+//get mutipage entry point inject webpack
+const mutipage = require('./entries');
+
+
+const fs = require('fs');
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebookincubator/create-react-app/issues/637
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+const injectHtmlWebpackPlugin = (mutipage)=>{
+  let arr = [];
+  let json = {};
+  const list = Object.keys(mutipage);
+    
+   
+
+  list.forEach((keyName,index)=>{
+    if(typeof mutipage[keyName] != 'object'){
+      mutipage[keyName] = {};
+    }
+    json[keyName] = [require.resolve('./polyfills'), resolveApp(`src/${mutipage[keyName].path}`)];
+    
+    arr.push(
+      new HtmlWebpackPlugin({
+        filename:`${keyName}/index.html`,
+        chunks:mutipage[keyName].jsonp && ['vendor','manifest',keyName].concat(mutipage[keyName].jsonp),
+        inject: true,
+        template: paths.appHtml,
+
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true,
+        },
+      })
+    )
+  })
+  console.log(json)
+  return {arr:arr,json:json};
+};
+const mutiPageConfig = injectHtmlWebpackPlugin(mutipage);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -25,6 +74,7 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1);
+
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
@@ -56,13 +106,7 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: {
-    index:[require.resolve('./polyfills'), paths.appIndexJs],
-    first:[require.resolve('./polyfills'), paths.firstIndexJs],
-    // index:[require.resolve('./polyfills'), paths.appIndexJs],
-    // index:[require.resolve('./polyfills'), paths.appIndexJs],
-
-  },
+  entry: mutiPageConfig.json,
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -221,12 +265,7 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
-          {
-            test:/\.css$/,
-            loader: ExtractTextPlugin.extract({
-              use:require.resolve('css-loader')
-            }),
-          },
+          
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
@@ -284,22 +323,7 @@ module.exports = {
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.appHtml,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
-    }),
+    
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
@@ -373,7 +397,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  ],
+  ].concat(mutiPageConfig.arr),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

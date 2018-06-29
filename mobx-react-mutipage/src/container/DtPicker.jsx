@@ -13,7 +13,7 @@ import '../mui/css/app.css';
 async function getMui(){
 	window.mui = await import('../mui/js/mui.js');
 
-	await import('../mui/js/mui.picker.min.js')
+	await import(/* webpackChunkName: 'ImportFuncDemo' */'../mui/js/mui.picker.min.js')
 
 	return window.mui;
 }

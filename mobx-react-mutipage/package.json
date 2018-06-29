@@ -90,6 +90,7 @@
     ],
     "plugins":["transform-decorators-legacy"]
   },
+  "servedPath":"",
   "eslintConfig": {
     "extends": "react-app"
   }

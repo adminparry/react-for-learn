@@ -12,6 +12,60 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const fs = require('fs');
+
+//get mutipage entry point inject webpack
+const mutipage = require('./entries');
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebookincubator/create-react-app/issues/637
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+const injectHtmlWebpackPlugin = (mutipage)=>{
+  let arr = [];
+  let json = {};
+  const list = Object.keys(mutipage);
+    
+   
+
+  list.forEach((keyName,index)=>{
+    if(typeof mutipage[keyName] != 'object'){
+      mutipage[keyName] = {};
+    }
+    json[keyName] = [
+      // We ship a few polyfills by default:
+      require.resolve('./polyfills'),
+      // Include an alternative client for WebpackDevServer. A client's job is to
+      // connect to WebpackDevServer by a socket and get notified about changes.
+      // When you save a file, the client will either apply hot updates (in case
+      // of CSS changes), or refresh the page (in case of JS changes). When you
+      // make a syntax error, this client will display a syntax error overlay.
+      // Note: instead of the default WebpackDevServer client, we use a custom one
+      // to bring better experience for Create React App users. You can replace
+      // the line below with these two lines if you prefer the stock client:
+      require.resolve('webpack-dev-server/client') + '?/',
+      require.resolve('webpack/hot/dev-server'),
+      // require.resolve('react-dev-utils/webpackHotDevClient'),
+      // Finally, this is your app's code:
+      //paths.appIndexJs,
+      resolveApp(`src/${mutipage[keyName].path}`),
+      // We include the app code last so that if there is a runtime error during
+      // initialization, it doesn't blow up the WebpackDevServer client, and
+      // changing JS code would still trigger a refresh.
+    ]
+    arr.push(
+      new HtmlWebpackPlugin({
+        filename:`${keyName}/index.html`,
+        chunks:mutipage[keyName].jsonp && [keyName,'vendor','manifest'].concat(mutipage[keyName].jsonp),
+        inject: true,
+        template: paths.appHtml,
+      })
+    )
+  })
+  console.log(json)
+  return {arr:arr,json:json};
+};
+
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -33,28 +87,7 @@ module.exports = {
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry:{
-    calcTander:[
-      // We ship a few polyfills by default:
-      require.resolve('./polyfills'),
-      // Include an alternative client for WebpackDevServer. A client's job is to
-      // connect to WebpackDevServer by a socket and get notified about changes.
-      // When you save a file, the client will either apply hot updates (in case
-      // of CSS changes), or refresh the page (in case of JS changes). When you
-      // make a syntax error, this client will display a syntax error overlay.
-      // Note: instead of the default WebpackDevServer client, we use a custom one
-      // to bring better experience for Create React App users. You can replace
-      // the line below with these two lines if you prefer the stock client:
-      // require.resolve('webpack-dev-server/client') + '?/',
-      // require.resolve('webpack/hot/dev-server'),
-      require.resolve('react-dev-utils/webpackHotDevClient'),
-      // Finally, this is your app's code:
-      paths.appIndexJs,
-      // We include the app code last so that if there is a runtime error during
-      // initialization, it doesn't blow up the WebpackDevServer client, and
-      // changing JS code would still trigger a refresh.
-    ],
-  },
+  entry:injectHtmlWebpackPlugin(mutipage).json,
   output: {
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
@@ -217,7 +250,31 @@ module.exports = {
     ],
   },
   plugins: [
-    
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        const isFuck = module.resource &&
+          module.resource.indexOf(
+            path.join(__dirname, '../src/mui')
+          ) === 0 
+          || /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0;
+
+          if(isFuck){
+            console.log(module.resource)
+          }
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          isFuck
+        )
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity
+    }),
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -236,10 +293,13 @@ module.exports = {
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.appHtml,
-    }),
+    
+    // new HtmlWebpackPlugin({
+    //   filename:'firstIndex/index.html',
+    //   chunks:['first','ImportFuncDemo','vendor','manifest'],
+    //   inject: true,
+    //   template: paths.appHtml,
+    // }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -262,7 +322,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  ],
+  ].concat(injectHtmlWebpackPlugin(mutipage).arr),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
