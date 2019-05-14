@@ -86,7 +86,7 @@
   },
   "babel": {
     "presets": [
-      "react-app","mobx"
+      "react-app"
     ],
     "plugins":["transform-decorators-legacy"]
   },
