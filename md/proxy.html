@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>react-cli · GitBook</title>
+        <title>PROXY · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="hot-reload.html" />
+    <link rel="next" href="mock.html" />
     
     
-    <link rel="prev" href="../" />
+    <link rel="prev" href="hot-reload.html" />
     
 
     </head>
@@ -102,7 +102,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="react-cli.html">
+        <li class="chapter " data-level="1.2" data-path="react-cli.html">
             
                 <a href="react-cli.html">
             
@@ -128,7 +128,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="proxy.html">
+        <li class="chapter active" data-level="1.4" data-path="proxy.html">
             
                 <a href="proxy.html">
             
@@ -262,7 +262,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >react-cli</a>
+        <a href=".." >PROXY</a>
     </h1>
 </div>
 
@@ -277,26 +277,26 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x521B;&#x5EFA;&#x4E00;&#x4E2A;react&#x5E94;&#x7528;">&#x521B;&#x5EFA;&#x4E00;&#x4E2A;react&#x5E94;&#x7528;</h1>
-<pre><code class="lang-bash">npm install -g create-react-app
+                                <h1 id="proxy">proxy</h1>
+<pre><code class="lang-bash">npm install http-proxy-middleware --save
+<span class="hljs-built_in">cd</span> src &amp;&amp; touch setupProxy.js
 </code></pre>
-<p><img src="../assets/WechatIMG27.png" alt="help"></p>
-<p>&#x521B;&#x5EFA;&#x5E94;&#x7528; &#x5982;&#x679C;&#x4E0D;&#x559C;&#x6B22;typescript &#x53EF;&#x4EE5;&#x4E0D;&#x8FDB;&#x884C;&#x9009;&#x62E9;
-&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x8FDB;&#x5165;&#x5230;&#x76EE;&#x5F55;&#x8FD0;&#x884C;</p>
-<pre><code class="lang-bash">react-create-app first-project --typescript
-<span class="hljs-built_in">cd</span> first-project
+<h5 id="setupproxyjs">setupProxy.js</h5>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> proxy = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http-proxy-middleware&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">app</span>) </span>{
+  app.use(proxy(<span class="hljs-string">&apos;/api&apos;</span>, { target: <span class="hljs-string">&apos;http://localhost:5000/&apos;</span> }));
+};
 </code></pre>
-<p>&#x67E5;&#x770B;&#x5DE5;&#x5177;&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x67E5;&#x770B;package.json&#x6587;&#x4EF6;&#x4E2D;&#x7684;script</p>
-<p><img src="../assets/WechatIMG28.png" alt="script"></p>
-<p>&#x5BFC;&#x51FA;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6709;&#x5229;&#x4E8E;&#x540E;&#x7EED;&#x5BF9;&#x9879;&#x76EE;&#x7684;&#x6574;&#x5408;</p>
-<pre><code class="lang-bash">git init
-git add .
-git commit -m <span class="hljs-string">&quot;init eject config&quot;</span>
-npm run eject
+<h3 id="git">git</h3>
+<p><a href="https://github.com/adminparry/react-family-demo.git" target="_blank">https://github.com/adminparry/react-family-demo.git</a></p>
+<pre><code class="lang-bash">git <span class="hljs-built_in">clone</span> https://github.com/adminparry/react-family-demo.git
+<span class="hljs-built_in">cd</span> react-proxy-demo
+npm install 
+npm start
 </code></pre>
-<p>&#x8FD0;&#x884C;&#x5F00;&#x53D1;&#x6A21;&#x5F0F;</p>
-<pre><code class="lang-bash">npm run start
-</code></pre>
+<h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
+<p><a href="https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/" target="_blank">https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/</a></p>
 
                                 
                                 </section>
@@ -324,12 +324,12 @@ npm run eject
 
             
                 
-                <a href="../" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                <a href="hot-reload.html" class="navigation navigation-prev " aria-label="Previous page: HMR">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="hot-reload.html" class="navigation navigation-next " aria-label="Next page: HMR">
+                <a href="mock.html" class="navigation navigation-next " aria-label="Next page: MOCK">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -340,7 +340,7 @@ npm run eject
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"react-cli","level":"1.2","depth":1,"next":{"title":"HMR","level":"1.3","depth":1,"path":"md/hot-reload.md","ref":"./md/hot-reload.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"md/react-cli.md","mtime":"2019-05-07T09:38:18.852Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-14T15:53:13.056Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PROXY","level":"1.4","depth":1,"next":{"title":"MOCK","level":"1.5","depth":1,"path":"md/mock.md","ref":"./md/mock.md","articles":[]},"previous":{"title":"HMR","level":"1.3","depth":1,"path":"md/hot-reload.md","ref":"./md/hot-reload.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"md/proxy.md","mtime":"2019-05-14T07:10:47.519Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-14T15:53:13.056Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
