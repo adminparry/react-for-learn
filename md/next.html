@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>PROXY · GitBook</title>
+        <title>Nextjs · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="mock.html" />
+    <link rel="next" href="quickStarter.html" />
     
     
-    <link rel="prev" href="hot-reload.html" />
+    <link rel="prev" href="redux-observable.html" />
     
 
     </head>
@@ -128,7 +128,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="proxy.html">
+        <li class="chapter " data-level="1.4" data-path="proxy.html">
             
                 <a href="proxy.html">
             
@@ -258,7 +258,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.14" data-path="next.html">
+        <li class="chapter active" data-level="1.14" data-path="next.html">
             
                 <a href="next.html">
             
@@ -463,7 +463,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >PROXY</a>
+        <a href=".." >Nextjs</a>
     </h1>
 </div>
 
@@ -478,26 +478,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="proxy">proxy</h1>
-<pre><code class="lang-bash">npm install http-proxy-middleware --save
-<span class="hljs-built_in">cd</span> src &amp;&amp; touch setupProxy.js
-</code></pre>
-<h5 id="setupproxyjs">setupProxy.js</h5>
-<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> proxy = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http-proxy-middleware&apos;</span>);
-
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">app</span>) </span>{
-  app.use(proxy(<span class="hljs-string">&apos;/api&apos;</span>, { target: <span class="hljs-string">&apos;http://localhost:5000/&apos;</span> }));
-};
-</code></pre>
-<h3 id="git">git</h3>
-<p><a href="https://github.com/adminparry/react-family-demo.git" target="_blank">https://github.com/adminparry/react-family-demo.git</a></p>
-<pre><code class="lang-bash">git <span class="hljs-built_in">clone</span> https://github.com/adminparry/react-family-demo.git
-<span class="hljs-built_in">cd</span> react-proxy-demo
-npm install 
-npm start
-</code></pre>
-<h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
-<p><a href="https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/" target="_blank">https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/</a></p>
+                                <h1 id="nextjs">Nextjs</h1>
+<p>&#x670D;&#x52A1;&#x7AEF;&#x6E32;&#x67D3;(server side render)</p>
+<h3 id="ssr">ssr</h3>
 
                                 
                                 </section>
@@ -525,12 +508,12 @@ npm start
 
             
                 
-                <a href="hot-reload.html" class="navigation navigation-prev " aria-label="Previous page: HMR">
+                <a href="redux-observable.html" class="navigation navigation-prev " aria-label="Previous page: redux-observable">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="mock.html" class="navigation navigation-next " aria-label="Next page: MOCK">
+                <a href="quickStarter.html" class="navigation navigation-next " aria-label="Next page: 快速创建react项目">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -541,7 +524,7 @@ npm start
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PROXY","level":"1.4","depth":1,"next":{"title":"MOCK","level":"1.5","depth":1,"path":"md/mock.md","ref":"./md/mock.md","articles":[]},"previous":{"title":"HMR","level":"1.3","depth":1,"path":"md/hot-reload.md","ref":"./md/hot-reload.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"md/proxy.md","mtime":"2019-05-14T07:10:47.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-31T10:13:52.453Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Nextjs","level":"1.14","depth":1,"next":{"title":"快速创建react项目","level":"1.15","depth":1,"path":"md/quickStarter.md","ref":"./md/quickStarter.md","articles":[]},"previous":{"title":"redux-observable","level":"1.13","depth":1,"path":"md/redux-observable.md","ref":"./md/redux-observable.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"md/next.md","mtime":"2019-05-16T14:00:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-31T10:13:52.453Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

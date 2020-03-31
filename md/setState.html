@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>PROXY · GitBook</title>
+        <title>setState · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="mock.html" />
+    <link rel="next" href="diff.html" />
     
     
-    <link rel="prev" href="hot-reload.html" />
+    <link rel="prev" href="component/prisma.html" />
     
 
     </head>
@@ -128,7 +128,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="proxy.html">
+        <li class="chapter " data-level="1.4" data-path="proxy.html">
             
                 <a href="proxy.html">
             
@@ -323,7 +323,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.19" data-path="setState.html">
+        <li class="chapter active" data-level="1.19" data-path="setState.html">
             
                 <a href="setState.html">
             
@@ -463,7 +463,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >PROXY</a>
+        <a href=".." >setState</a>
     </h1>
 </div>
 
@@ -478,26 +478,46 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="proxy">proxy</h1>
-<pre><code class="lang-bash">npm install http-proxy-middleware --save
-<span class="hljs-built_in">cd</span> src &amp;&amp; touch setupProxy.js
-</code></pre>
-<h5 id="setupproxyjs">setupProxy.js</h5>
-<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> proxy = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http-proxy-middleware&apos;</span>);
+                                <h1 id="react-&#x4E2D;-setstate-&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x662F;&#x540C;&#x6B65;&#x7684;&#xFF0C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x662F;&#x5F02;&#x6B65;&#x7684;">React &#x4E2D; setState &#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x662F;&#x540C;&#x6B65;&#x7684;&#xFF0C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x662F;&#x5F02;&#x6B65;&#x7684;</h1>
+<p><a href="https://reactjs.org/docs/faq-state.html#when-is-setstate-asynchronous" target="_blank">https://reactjs.org/docs/faq-state.html#when-is-setstate-asynchronous</a></p>
+<p>&#x53EA;&#x8981;&#x7ED9;&#x8FD9;&#x4E2A;&#x80CC;&#x4F1A;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</p>
+<p>if both Parent and Child call setState during a click event, Child isn&#x2019;t re-rendered twice. </p>
+<p>&#x6211;&#x7684;&#x4E2A;&#x4EBA;&#x89C2;&#x70B9;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x5BF9;&#x4E8E;&#x540C;&#x6B65;&#x6216;&#x8005;&#x662F;&#x5F02;&#x6B65;&#x90FD;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x63A7;&#x5236;&#x7684;&#x60F3;&#x8981;&#x540C;&#x6B65;&#x5C31;&#x540C;&#x6B65;&#x60F3;&#x8981;&#x5F02;&#x6B65;&#x5C31;&#x5F02;&#x6B65;
+&#x6211;&#x8001;&#x5A46;&#x63D0;&#x9192;&#x6211;&#x5982;&#x679C;&#x9762;&#x8BD5;&#x5B98;&#x95EE;&#x4EC0;&#x4E48;&#x4F60;&#x7BA1;&#x4E0D;&#x4E86; &#x8C01;&#x8BA9;&#x4F60;&#x60F3;&#x53BB;&#x90A3;&#x5DE5;&#x4F5C;&#x5462;</p>
+<pre><code class="lang-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">super</span>();
+    <span class="hljs-keyword">this</span>.state = {
+      val: <span class="hljs-number">0</span>
+    };
+  }
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">app</span>) </span>{
-  app.use(proxy(<span class="hljs-string">&apos;/api&apos;</span>, { target: <span class="hljs-string">&apos;http://localhost:5000/&apos;</span> }));
+  componentDidMount() {
+    <span class="hljs-keyword">this</span>.setState({val: <span class="hljs-keyword">this</span>.state.val + <span class="hljs-number">1</span>});
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.state.val);    <span class="hljs-comment">// &#x7B2C; 1 &#x6B21; log</span>
+
+    <span class="hljs-keyword">this</span>.setState({val: <span class="hljs-keyword">this</span>.state.val + <span class="hljs-number">1</span>});
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.state.val);    <span class="hljs-comment">// &#x7B2C; 2 &#x6B21; log</span>
+
+    setTimeout(() =&gt; {
+      <span class="hljs-keyword">this</span>.setState({val: <span class="hljs-keyword">this</span>.state.val + <span class="hljs-number">1</span>});
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.state.val);  <span class="hljs-comment">// &#x7B2C; 3 &#x6B21; log</span>
+
+      <span class="hljs-keyword">this</span>.setState({val: <span class="hljs-keyword">this</span>.state.val + <span class="hljs-number">1</span>});
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.state.val);  <span class="hljs-comment">// &#x7B2C; 4 &#x6B21; log</span>
+    }, <span class="hljs-number">0</span>);
+  }
+
+  render() {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
 };
 </code></pre>
-<h3 id="git">git</h3>
-<p><a href="https://github.com/adminparry/react-family-demo.git" target="_blank">https://github.com/adminparry/react-family-demo.git</a></p>
-<pre><code class="lang-bash">git <span class="hljs-built_in">clone</span> https://github.com/adminparry/react-family-demo.git
-<span class="hljs-built_in">cd</span> react-proxy-demo
-npm install 
-npm start
-</code></pre>
-<h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
-<p><a href="https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/" target="_blank">https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/</a></p>
+<p>&#x8F93;&#x51FA;&#xFF1A; 0 0 2 3</p>
+<h2 id="setstate&#x5B9E;&#x73B0;&#x539F;&#x7406;">setState&#x5B9E;&#x73B0;&#x539F;&#x7406;</h2>
+<p><a href="https://github.com/facebook/react/search?q=prototype.setState&amp;unscoped_q=prototype.setState" target="_blank">https://github.com/facebook/react/search?q=prototype.setState&amp;unscoped_q=prototype.setState</a></p>
+<p><a href="https://github.com/facebook/react/blob/0cf22a56a18790ef34c71bef14f64695c0498619/packages/react/src/ReactBaseClasses.js" target="_blank">https://github.com/facebook/react/blob/0cf22a56a18790ef34c71bef14f64695c0498619/packages/react/src/ReactBaseClasses.js</a></p>
+<p><a href="https://github.com/facebook/react/blob/6498f62edcdf0bcc02ed96efdad92b7e89330d8a/packages/react-dom/src/server/ReactPartialRenderer.js" target="_blank">https://github.com/facebook/react/blob/6498f62edcdf0bcc02ed96efdad92b7e89330d8a/packages/react-dom/src/server/ReactPartialRenderer.js</a></p>
 
                                 
                                 </section>
@@ -525,12 +545,12 @@ npm start
 
             
                 
-                <a href="hot-reload.html" class="navigation navigation-prev " aria-label="Previous page: HMR">
+                <a href="component/prisma.html" class="navigation navigation-prev " aria-label="Previous page: prisma">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="mock.html" class="navigation navigation-next " aria-label="Next page: MOCK">
+                <a href="diff.html" class="navigation navigation-next " aria-label="Next page: diff">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -541,7 +561,7 @@ npm start
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PROXY","level":"1.4","depth":1,"next":{"title":"MOCK","level":"1.5","depth":1,"path":"md/mock.md","ref":"./md/mock.md","articles":[]},"previous":{"title":"HMR","level":"1.3","depth":1,"path":"md/hot-reload.md","ref":"./md/hot-reload.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"md/proxy.md","mtime":"2019-05-14T07:10:47.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-31T10:13:52.453Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"setState","level":"1.19","depth":1,"next":{"title":"diff","level":"1.20","depth":1,"path":"md/diff.md","ref":"./md/diff.md","articles":[]},"previous":{"title":"prisma","level":"1.18","depth":1,"path":"md/component/prisma.md","ref":"./md/component/prisma.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"md/setState.md","mtime":"2020-03-31T06:02:59.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-31T10:13:52.453Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
